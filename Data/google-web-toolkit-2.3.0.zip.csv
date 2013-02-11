@@ -1,0 +1,20 @@
+files,language,blank,comment,code,"http://cloc.sourceforge.net v 1.56  T=114.0 s (54.7 files/s, 9153.7 lines/s)"
+5408,Java,99777,283188,575949
+80,CSS,1009,884,11723
+372,XML,1495,3692,11455
+60,Objective C,2002,3004,9818
+52,C++,1187,2086,7943
+120,C/C++ Header,1711,5656,6515
+52,HTML,350,492,2153
+36,Javascript,459,1016,1908
+11,XSLT,205,255,1792
+5,XSD,192,162,1353
+5,C,128,171,1090
+8,make,154,247,641
+3,Objective C++,79,81,384
+3,Python,80,90,228
+14,Bourne Shell,28,110,187
+1,DTD,7,46,145
+2,IDL,8,0,127
+4,Teamcenter def,5,0,35
+2,ASP.Net,0,0,23

@@ -1,0 +1,12 @@
+files,language,blank,comment,code,"http://cloc.sourceforge.net v 1.56  T=5.0 s (35.0 files/s, 18734.0 lines/s)"
+74,C,9046,9889,40809
+1,XML,221,217,9505
+62,C/C++ Header,1619,2220,7237
+4,C++,1233,1587,3638
+10,make,526,557,2042
+9,Assembly,209,473,1576
+2,Visual Basic,113,352,336
+9,Teamcenter def,26,0,123
+2,Bourne Shell,6,5,69
+1,IDL,3,0,16
+1,NAnt scripts,3,0,14

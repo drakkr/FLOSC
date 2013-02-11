@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>WebSLOC</title>
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojo/resources/dojo.css">
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css">
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/grid/resources/EnhancedGrid.css">
+		<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dojox/grid/resources/claroGrid.css">
+
+		<style>
+			.project {
+				font-weight: bold;
+			}
+
+			/*Grid need a explicit width/height by default*/
+			#grid {
+			    width: 610px;
+			    height: 700px;
+			    margin:0px auto;
+			}
+
+			#buttons, #csv {
+			    margin:0px auto;
+			    text-align: center;
+			}
+
+		</style>
+		<!-- load dojo and provide config via data attribute -->
+		<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.6.0/dojo/dojo.xd.js"
+				data-dojo-config="isDebug: true,parseOnLoad: true">
+		</script>
+		<script>
+			dojo.require("dojox.grid.EnhancedGrid");
+			dojo.require("dojox.grid.enhanced.plugins.exporter.CSVWriter");
+			dojo.require("dojo.data.ItemFileWriteStore");
+			dojo.require("dijit.form.TextBox");
+			dojo.require("dijit.form.Button");
+
+			var grid, store, filter;
+			dojo.ready(function(){
+				filter = new dijit.form.TextBox({
+				    name: "myfilter",
+				    value: "",
+				    placeHolder: "type in your filter (ex: *eclipse*)"
+				}, "myfilter");
+				store = new dojo.data.ItemFileWriteStore({
+					url: "tonic/docroot/projects"
+				});
+				grid = new dojox.grid.EnhancedGrid({
+					store: store,
+					query: { Id: "*" },
+					structure: [
+						{ name: "Name", field: "Name", width: "300px", classes: "project" },
+						{ name: "Version", field: "Version", width: "80px" },
+						{ name: "Function Points (non adjusted)", field: "PFna", width: "100px", cellStyles: "text-align: right;" },
+						{ name: "Function Points (adjusted)", field: "PFa", width: "100px", cellStyles: "text-align: right;" }
+					],
+					plugins:{
+					  exporter: true
+					}
+				}, "grid");
+				// Since dojo.parse was called at page startup (parseOnLoad:true) we need to call grid.startup to render the grid 
+				grid.startup();
+				dojo.connect(grid, "onRowDblClick", null, 
+				  function(evt) {
+				    id = grid.selection.getSelected()[0]["Id"];
+				    window.location = "project.php?Id="+id;
+				});
+			});
+		</script>
+
+	</head>
+	<body class="claro" style="text-align: center;">
+		<br/>
+		<img src="flosc-logo-small.png" alt="FLOS Complexity"/>
+		<br/><br/>
+		<div id="buttons">
+		  <input type="text" id="myfilter"></input>
+		  <span dojoType="dijit.form.Button">
+		      Filter
+		      <script type="dojo/method" event="onClick" args="evt">
+			  grid.filter({
+			      Name: filter.value
+			  });
+		      </script>
+		  </span>
+		</div>
+		<br/>
+		<div id="grid"></div>
+		<br/>
+		<div id="csv">
+		  <span dojoType="dijit.form.Button">
+		      CSV export
+		      <script type="dojo/method" event="onClick" args="evt">
+			  grid.exportGrid("csv", {writerArgs: {separator:":"}}, function(str){
+			    var uriContent = "data:text/csv," + encodeURIComponent(str);
+			    location.href = uriContent;
+			  });
+		      </script>
+		  </span>
+		</div>
+	</body>
+</html>

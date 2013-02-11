@@ -1,0 +1,18 @@
+files,language,blank,comment,code,"http://cloc.sourceforge.net v 1.56  T=41.0 s (52.2 files/s, 19793.3 lines/s)"
+819,HTML,58851,773,207510
+61,XML,4137,1625,159093
+514,C++,33686,44541,148559
+666,C/C++ Header,17445,61320,49963
+13,Bourne Shell,1001,1509,10470
+26,C,1037,1616,3682
+4,Perl,304,371,1242
+11,XSLT,160,47,824
+5,XSD,97,0,743
+2,CSS,0,0,318
+10,DTD,55,29,147
+3,Assembly,7,0,132
+1,IDL,11,0,94
+1,make,8,23,37
+1,Javascript,3,0,18
+2,Teamcenter def,5,0,15
+3,DOS Batch,4,4,9
