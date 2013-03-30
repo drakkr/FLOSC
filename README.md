@@ -1,4 +1,4 @@
-![Logo](Method/fr/Images/flosc-logo.png)
+![Logo](Method/fr/Images/flosc-logo-small.png)
 
 FLOSC (Free/Libre Open Source Complexity) - Method, Tools and Data.
 
