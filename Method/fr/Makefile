@@ -1,12 +1,46 @@
-# Makefile for FLOSC Method - French version
+# Makefile for FLOSC method - French version
 
-all: doc-pdf
+DOC=flosc
+
+VERSION=1.1
+
+LANG=fr
+
+TITLE=Méthode d'évaluation de la complexité de logiciels Open Source (FLOSC)
+
+#List of edocs to be included in Gitit export
+PAGES=flosc-intro_$(LANG).md flosc-process_$(LANG).md flosc-step1_$(LANG).md flosc-step2_$(LANG).md flosc-step3_$(LANG).md flosc-tools_$(LANG).md flosc-appendixA_$(LANG).md
+
+#List of edocs to be included in other exports
+CHAPTERS=flosc-head_$(LANG).md flosc-changelog_$(LANG).md $(PAGES) flosc-appendixB_$(LANG).md
+
+DOCNAME=$(DOC)-$(VERSION)_$(LANG)
 
 doc-pdf:
-	pandoc -N --toc --template=flosc-template_fr.latex --variable lang=french -o flosc-1.1_fr.pdf flosc-head_fr.md flosc-changelog_fr.md flosc-intro_fr.md flosc-process_fr.md flosc-step1_fr.md flosc-steps2-3_fr.md flosc-tools_fr.md flosc-appendixA_fr.md flosc-appendixB_fr.md
+	mkdir -p dist
+	pandoc -N --toc --template=flosc-template_$(LANG).latex --variable lang=french -o dist/$(DOCNAME).pdf $(CHAPTERS)
 
 doc-odt:
-	pandoc --toc -o flosc-1.1_fr.odt flosc-head_fr.md flosc-changelog_fr.md flosc-intro_fr.md flosc-process_fr.md flosc-step1_fr.md flosc-steps2-3_fr.md flosc-tools_fr.md flosc-appendixA_fr.md flosc-appendixB_fr.md
+	mkdir -p dist
+	pandoc --toc -o dist/$(DOCNAME).odt $(CHAPTERS)
 
 doc-html:
-	pandoc --self-contained -o flosc-1.1_fr.html flosc-head_fr.md flosc-changelog_fr.md flosc-intro_fr.md flosc-process_fr.md flosc-step1_fr.md flosc-steps2-3_fr.md flosc-tools_fr.md flosc-appendixA_fr.md flosc-appendixB_fr.md
+	mkdir -p dist
+	pandoc --self-contained -o dist/$(DOCNAME).html $(CHAPTERS)
+
+gitit:
+	mkdir -p dist
+	cp -R Images dist/.
+	#Create summary Gitit page
+	echo '---' > dist/$(DOCNAME).page
+	echo "title: $(TITLE)" >> dist/$(DOCNAME).page
+	echo '...' >> dist/$(DOCNAME).page
+	echo -e '\n' >> dist/$(DOCNAME).page
+
+	$(foreach PAGE, $(PAGES), echo -e "[$(subst # ,,$(shell head -1 $(PAGE)))]($(basename $(PAGE))) \n" >> dist/$(DOCNAME).page ;)
+
+	#Create Gitit pages with titles
+	$(foreach PAGE, $(PAGES), echo -e "---\ntitle: $(subst # ,,$(shell head -1 $(PAGE)))\n...\n" > dist/$(basename $(PAGE)).page ; cat $(PAGE) >> dist/$(basename $(PAGE)).page ;)
+
+clean:
+	rm -Rf dist/
